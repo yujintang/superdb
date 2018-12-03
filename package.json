@@ -1,0 +1,22 @@
+{
+  "name": "easydb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:yujintang/easydb.git",
+  "scripts": {
+    "lint": "eslint ./",
+    "lint:fix": "eslint --fix ./"
+  },
+  "author": "flynn.yu",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "mysql-activerecord": "https://github.com/martintajur/node-mysql-activerecord.git",
+    "mysql2": "^1.6.4"
+  }
+}
