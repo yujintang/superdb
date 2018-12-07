@@ -8,9 +8,9 @@ better and easy db(mysql...) tools for node.js
 - [ ] add cache 
 
 __Table of contents__
-- [Installation](###Installation)
-- [QuickStart](###QuickStart)
-- [Connection](###Connection)
+- [Installation](#installation)
+- [QuickStart](#quickStart)
+- [Connection](#connection)
 
 ### Installation
 ```
@@ -27,6 +27,7 @@ const main = async () => {
     select: ['id', 'name'],
     where: {
       id: 1,
+      name: conn.Op.is(null),
     },
     limit: 5,
   });
@@ -37,3 +38,57 @@ main();
 // SELECT id, name FROM tb_example WHERE id = 1 AND name IS null LIMIT 5
 ```
 ### Connection
+```js
+const db = new Superdb(config, options);
+const conn = await db.createConn();
+```
+#### config
+
+```js
+// 1
+config = {
+  connectionLimit : 10,
+  host              : 'localhost',
+  port              : '3306',
+  user              : 'root',
+  password          : 'password',
+  database          : 'example'
+}
+
+// 2
+config = 'mysql://user:password@host:post/database'
+```
+#### options
+```js
+options = {
+    dialect         : 'mysql',  // which db? default: "mysql",
+    pool            : true,     // connection pool ? default true
+    promise         : true      // using promise async/await ? default true
+    logging         : false,    // print sql ? default false
+}
+```
+### Conn methods
+* query
+```js
+const result = await conn.query(sql)
+```
+* execute
+```js
+const result = await conn.execute(sql)
+```
+* find
+```js
+const result = await conn.find(tbName, findOptions);
+```
+* create
+```js
+const result = await conn.create(tbName, createParams);
+```
+* update
+```js
+const result = await conn.update(tbName, updateOptions);
+```
+* delete
+```js
+const result = await conn.delete(tbName, deleteOptions)
+```
