@@ -11,6 +11,7 @@ __Table of contents__
 - [Installation](#installation)
 - [QuickStart](#quickStart)
 - [Connection](#connection)
+- [Conn methods](#conn-methods)
 
 ### Installation
 ```
@@ -79,6 +80,10 @@ const result = await conn.execute(sql)
 * find
 ```js
 const result = await conn.find(tbName, findOptions);
+```
+* findOne
+```js
+const result = await conn.findOne(tbName, findOptions);
 ```
 * create
 ```js
