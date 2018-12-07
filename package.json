@@ -1,8 +1,8 @@
 {
-  "name": "easydb",
+  "name": "superdb",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:yujintang/easydb.git",
+  "repository": "git@github.com:yujintang/superdb.git",
   "scripts": {
     "lint": "eslint ./",
     "lint:fix": "eslint --fix ./"

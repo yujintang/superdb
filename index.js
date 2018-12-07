@@ -1,1 +1,1 @@
-module.exports = require('./lib/easydb');
+module.exports = require('./lib/superdb');
