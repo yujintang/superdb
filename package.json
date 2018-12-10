@@ -1,6 +1,6 @@
 {
   "name": "superdb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "git@github.com:yujintang/superdb.git",
   "scripts": {
@@ -10,16 +10,22 @@
   },
   "author": "flynn.yu",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0"
   },
+  "keywords": [
+    "mysql",
+    "postgresql",
+    "postgres",
+    "nodejs",
+    "orm"
+  ],
   "dependencies": {
     "lodash": "^4.17.11",
-    "mysql-activerecord": "https://github.com/martintajur/node-mysql-activerecord.git",
     "mysql2": "^1.6.4"
   }
 }

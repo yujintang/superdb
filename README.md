@@ -2,7 +2,7 @@
 **使用场景：** 
 1. 拒绝拼接SQL语句，长期维护且达到易读效果
 2. 减少ORM模型定义，表更新频繁
-3. 链式操作
+3. 支持链式操作，让数据定义更灵活
 4. 多数据库支持
 5. 频繁读数据放入缓存
 6. 性能提升
@@ -21,8 +21,16 @@ __Table of contents__
 - [Op](#op)
 
 ### Installation
+```shell
+yarn add https://github.com/yujintang/superdb.git
 ```
-yarn add https://github.com/yujintang/superdb.git 
+or
+```shell
+yarn add superdb
+```
+or 
+```shell
+npm install --save superdb
 ```
 ### QuickStart
 ```js
