@@ -12,6 +12,9 @@ __Table of contents__
 - [QuickStart](#quickStart)
 - [Connection](#connection)
 - [Conn methods](#conn-methods)
+- [findOptions](#findoptions)
+- [Chain methods](#chain-methods)
+- [Op](#op)
 
 ### Installation
 ```
@@ -66,34 +69,289 @@ options = {
     pool            : true,     // connection pool ? default true
     promise         : true      // using promise async/await ? default true
     logging         : false,    // print sql ? default false
+    maxLimit        : -1,       // sql limit, default no limit
 }
 ```
 ### Conn methods
-* query
+#### query
 ```js
-const result = await conn.query(sql)
+await conn.query(sql)
+
+const result = await conn.query('select * from tb_example')
+// select * from tb_example
 ```
-* execute
+#### execute
 ```js
-const result = await conn.execute(sql)
+await conn.execute(sql)
+
+const result = await conn.query('select * from tb_example')
+// select * from tb_example
 ```
-* find
+#### find
 ```js
-const result = await conn.find(tbName, findOptions);
+await conn.find(tbName, findOptions);
+
+const result = await conn.find('tb_example', {
+    where: {
+      id: 333,
+      name: 'superdb',
+    },
+  });
+// SELECT * FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
-* findOne
+#### findOne
 ```js
-const result = await conn.findOne(tbName, findOptions);
+await conn.findOne(tbName, findOptions);
+
+const result = await conn.find('tb_example', {
+    where: {
+      id: 333,
+      name: 'superdb',
+    },
+  });
+// SELECT * FROM tb_example WHERE id = 333 AND name = 'superdb' LIMIT 1
 ```
-* create
+#### findAndCountAll
 ```js
-const result = await conn.create(tbName, createParams);
+await conn.findAndCountAll(tbName, findOptions);
+
+  const result = await conn.findAndCountAll('tb_example', {
+    where: {
+      id: 333,
+      name: 'superdb',
+    },
+  });
+// SELECT * FROM tb_example WHERE id = 333 AND name = 'superdb' 
+//  SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
-* update
+#### count
 ```js
-const result = await conn.update(tbName, updateOptions);
+await conn.count(tbName, findOptions);
+
+const result = await conn.count('tb_example', {
+    where: {
+      id: 333,
+      name: 'superdb',
+    },
+  });
+// SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
-* delete
+#### create
 ```js
-const result = await conn.delete(tbName, deleteOptions)
+await conn.create(tbName, createParams);
+
+const result = await conn.create('tb_example', [{ id: 100, name: 'qt' }, { id: 101, name: 'ds' }]);
+// INSERT INTO tb_example (id,name) values (100, 'qt'), (101, 'ds')
 ```
+#### update
+```js
+await conn.update(tbName, updateOptions, findOptions);
+
+const result = await conn.update('tb_example', { name: 'qtds' }, {
+    where: { id: 100 },
+  });
+// UPDATE tb_example SET name = 'qtds' WHERE id = 100
+```
+#### delete
+```js
+await conn.delete(tbName, deleteOptions)
+
+const result = await conn.delete('tb_example', {
+    where: { id: 100 },
+    limit: 1,
+  });
+// DELETE FROM tb_example WHERE id = 100 LIMIT 1
+```
+### findOptions
+```js
+findOptions = {
+    table: undefined,   // eg: ['tb_example']
+    select: [],         // eg: ['id', 'name']
+    join: [],           // eg: [{table: 'tb_user', on: 'tb_user.id = tb_example.id'}]
+    where: {},          // eg: {name: 'superdb'}
+    group: [],          // eg: ['name desc']
+    having: [],         // eg: ['count > 4']
+    order: [],          // eg: ['id desc', 'name asc']
+    limit: undefined,   // eg: 1
+    offset: undefined,  // eg: 1
+    logging: false,     // eg: true
+}
+```
+### Chain methods
+#### table(params.table)
+```js
+conn.table('tb_example')
+conn.table(['tb_example'])
+
+conn.table('tb_example as exp')
+conn.table(['tb_example', 'exp'])
+
+  const result = await conn
+    .find(['tb_example','exp']);
+//  SELECT * FROM tb_example AS exp
+```
+#### select(params.select)
+```js
+conn.select('id, name') 
+conn.select(['id', 'name'])
+
+const result = await conn
+    .select(['id', 'name'])
+    .find(['tb_example','exp']);
+// SELECT id, name FROM tb_example AS exp
+```
+#### updateBody(params.updateBody)
+```js
+conn.updateBody({name:'superdb'})
+
+const result = await conn
+    .updateBody({ name: 'superdb' })
+    .where({ name: 'oldName' })
+    .limit(1)
+    .update('tb_example');
+// UPDATE tb_example SET name = 'superdb' WHERE name = 'oldName' LIMIT 1
+```
+#### insertBody(params.insertBody)
+> 参数为数组，则代表插入多条
+```js
+conn.insertBody({id: 100, name: 'alldb'})
+conn.insertBody([{id: 100, name: 'alldb'}])
+
+const result = await conn
+    .insertBody([{ id: 100, name: 'alldb100' }, { id: 101, name: 'alldb101' }])
+    .create('tb_example');
+// INSERT INTO tb_example (id,name) values (100, 'alldb100'), (101, 'alldb101')
+```
+#### where(params.where)
+> more detail where, please enter [op](#op)
+```js
+conn.where({id: 5})
+
+const result = await conn
+    .where({ id: 5 })
+    .find('tb_example');
+// SELECT * FROM tb_example WHERE id = 5
+```
+#### join(params.join)
+```js
+  const result = await conn
+    .join([{
+      table: 'tb_user as User',
+      on: 'User.id = tb_example.id',
+      direction: 'left',
+    }])
+    .find('tb_example');  
+// SELECT * FROM tb_example left JOIN tb_user as User ON User.id = tb_example.id
+```
+#### limit(params.limit)
+```js
+conn.limit(10) // limit 10
+conn.limit([10, 1]) // limit 10 offset 1
+
+const result = await conn
+    .limit([10, 1])
+    .find('tb_example');
+// SELECT * FROM tb_example LIMIT 10 OFFSET 1
+```
+#### offset(params.offset)
+```js
+conn.offset(1) // offset 1
+
+const result = await conn
+    .limit(1)
+    .offset(1)
+    .find('tb_example');
+// SELECT * FROM tb_example LIMIT 1 OFFSET 1 
+```
+#### order(params.order)
+```js
+conn.order('id desc')
+conn.order(['id desc']) // ORDER BY id desc
+
+const result = await conn
+    .order(['id desc', 'name asc'])
+    .find('tb_example');
+// SELECT * FROM tb_example ORDER BY id desc, name asc
+```
+#### group(params.group)
+```js
+conn.group('name desc')
+conn.group(['name desc']) // GROUP BY name desc
+
+const result = await conn
+    .select('name')
+    .group(['name desc'])
+    .find('tb_example');
+// SELECT name FROM tb_example GROUP BY name desc
+```
+#### having(params.having)
+```js
+conn.having('count > 4')
+conn.having(['count > 4']) // HAVING count > 4
+
+const result = await conn
+    .select(['count(*) as count', 'name'])
+    .group(['name desc'])
+    .having(['count > 4'])
+    .find('tb_example');
+// SELECT count(*) as count, name FROM tb_example GROUP BY name desc HAVING count > 4
+```
+#### logging(params.logging);
+```js
+conn.logging(true) // print superdb sql 
+conn.logging(false) // not print superdb sql
+```
+
+### Op
+> Op = conn.op; 用来提供一系列where查询的方法集
+#### Op.or
+```js
+  const result = await conn.find('tb_example', {
+    where: {
+      [conn.Op.or]: {
+        id: 6,
+        name: 'superdb',
+      },
+    },
+  });
+// SELECT * FROM tb_example WHERE (id = 6 OR name = 'superdb')
+```
+#### OP.and 
+#### Op.literal
+> literal is unrelated with where.key ,just depends on where.value
+```js 
+  const result = await conn.find('tb_example', {
+    where: {
+      'random': conn.Op.literal('id IS NULL'),
+    },
+  });
+// SELECT * FROM tb_example WHERE id IS NULL
+```
+#### Op.is
+```js
+  const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.is(null),
+    },
+  });
+//  SELECT * FROM tb_example WHERE name IS null
+```
+#### Op.eq
+#### Op.ne
+#### Op.gte
+#### Op.gt
+#### Op.lte
+#### Op.lt
+#### Op.not
+#### Op.in
+#### Op.notIn
+#### Op.like
+#### Op.notLike
+#### Op.iLike
+#### Op.notILike
+#### Op.regexp
+#### Op.notRegexp
+#### Op.iRegexp
+#### Op.notIRegexp
+#### Op.between
+#### Op.notBetween
