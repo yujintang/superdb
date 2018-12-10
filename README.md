@@ -2,7 +2,7 @@
 better and easy db(mysql...) tools for node.js
 
 ## TODO
-- [ ] doc
+- [-] doc
 - [ ] test
 - [ ] postgresqls
 - [ ] add cache 
@@ -327,31 +327,129 @@ conn.logging(false) // not print superdb sql
   });
 // SELECT * FROM tb_example WHERE id IS NULL
 ```
+#### Op.eq
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.eq('superdb'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name = 'superdb'
+```
+#### Op.ne
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.ne('superdb'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name != 'superdb'
+```
+#### Op.gte
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.gte('d'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name >= 'd'
+```
+#### Op.gt
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.gt('d')
+    },
+  });
+// SELECT * FROM tb_example WHERE name > 'd' 
+```
+#### Op.lte
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.lte('d'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name <= 'd'
+```
+#### Op.lt
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.lt('d'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name < 'd'
+```
 #### Op.is
 ```js
-  const result = await conn.find('tb_example', {
+const result = await conn.find('tb_example', {
     where: {
       name: conn.Op.is(null),
     },
   });
 //  SELECT * FROM tb_example WHERE name IS null
 ```
-#### Op.eq
-#### Op.ne
-#### Op.gte
-#### Op.gt
-#### Op.lte
-#### Op.lt
 #### Op.not
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.not(null)
+    },
+  });
+// SELECT * FROM tb_example WHERE name IS NOT null
+```
 #### Op.in
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.in(['qtds', 'superdb'])
+    },
+  });
+// SELECT * FROM tb_example WHERE name IN ('qtds', 'superdb')
+```
 #### Op.notIn
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.notIn(['qtds', 'superdb'])
+    },
+  });
+// SELECT * FROM tb_example WHERE name NOT IN ('qtds', 'superdb')
+```
 #### Op.like
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.like('%d'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name LIKE '%d'
+```
 #### Op.notLike
-#### Op.iLike
-#### Op.notILike
-#### Op.regexp
-#### Op.notRegexp
-#### Op.iRegexp
-#### Op.notIRegexp
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.notLike('%d'),
+    },
+  });
+// SELECT * FROM tb_example WHERE name NOT LIKE '%d'
+```
 #### Op.between
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.between(['c', 'f'])
+    },
+  });
+// SELECT * FROM tb_example WHERE name BETWEEN 'c' AND 'f'
+```
 #### Op.notBetween
+```js
+const result = await conn.find('tb_example', {
+    where: {
+      name: conn.Op.notBetween(['c', 'f']),
+    },
+  });
+// SELECT * FROM tb_example WHERE name NOT BETWEEN 'c' AND 'f'
+```
