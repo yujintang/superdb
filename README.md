@@ -2,7 +2,6 @@
 better and easy db(mysql...) tools for node.js
 
 ## TODO
-- [-] doc
 - [ ] test
 - [ ] postgresqls
 - [ ] add cache 

@@ -5,7 +5,8 @@
   "repository": "git@github.com:yujintang/superdb.git",
   "scripts": {
     "lint": "eslint ./",
-    "lint:fix": "eslint --fix ./"
+    "lint:fix": "eslint --fix ./",
+    "test": "mocha"
   },
   "author": "flynn.yu",
   "license": "MIT",
