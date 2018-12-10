@@ -3,7 +3,7 @@ const { describe, it } = require('mocha');
 
 const Chain = require('../lib/chain');
 
-describe('chain function test', () => {
+describe('chain test', () => {
   describe('table', () => {
     it('array params should return true', () => {
       const chain = new Chain();
@@ -85,6 +85,48 @@ describe('chain function test', () => {
       chain.order('name desc');
       chain.order(['age desc']);
       assert.notStrictEqual(chain.body.order, ['name desc', 'age desc']);
+    });
+  });
+  describe('transferData', () => {
+    it('select', () => {
+      const chain = new Chain();
+      const sql = chain.transferData('select', {
+        table: 'tb_example',
+        select: ['id', 'name'],
+        where: { id: 5, name: 'qtds' },
+        limit: 10,
+        offset: 2,
+      });
+      assert.equal(sql, "SELECT id, name FROM tb_example WHERE id = 5 AND name = 'qtds' LIMIT 10 OFFSET 2 ");
+    });
+    it('insert', () => {
+      const chain = new Chain();
+      const sql = chain.transferData('insert', {
+        table: 'tb_example',
+        insertBody: [{ id: 1, name: 'hello' }, { id: 2, name: 'world' }],
+      });
+      assert.equal(sql, "INSERT INTO tb_example (id,name) values (1, 'hello'), (2, 'world') ");
+    });
+    it('update', () => {
+      const chain = new Chain();
+      const sql = chain.transferData('update', {
+        table: 'tb_example',
+        updateBody: { name: 'hello world' },
+        where: { id: 5, name: 'qtds' },
+        limit: 10,
+        offset: 2,
+      });
+      assert.equal(sql, "UPDATE tb_example SET name = 'hello world' WHERE id = 5 AND name = 'qtds' LIMIT 10 ");
+    });
+    it('delete', () => {
+      const chain = new Chain();
+      const sql = chain.transferData('delete', {
+        table: 'tb_example',
+        where: { id: 5, name: 'qtds' },
+        limit: 10,
+        offset: 2,
+      });
+      assert.equal(sql, "DELETE FROM tb_example WHERE id = 5 AND name = 'qtds' LIMIT 10 ");
     });
   });
 });

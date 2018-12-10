@@ -1,8 +1,13 @@
 # superdb
-better and easy db(mysql...) tools for node.js
+**使用场景：** 
+1. 拒绝拼接SQL语句，长期维护且达到易读效果
+2. 减少ORM模型定义，表更新频繁
+3. 链式操作
+4. 多数据库支持
+5. 频繁读数据放入缓存
+6. 性能提升
 
 ## TODO
-- [ ] test
 - [ ] postgresqls
 - [ ] add cache 
 
