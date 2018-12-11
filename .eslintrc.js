@@ -3,5 +3,6 @@ module.exports = {
     "rules":{
         "max-len": 0,
         "no-restricted-syntax": 0,
+        "no-console": 0,
     }
 };

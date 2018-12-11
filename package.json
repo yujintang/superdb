@@ -25,6 +25,7 @@
     "orm"
   ],
   "dependencies": {
+    "ioredis": "^4.3.0",
     "lodash": "^4.17.11",
     "mysql2": "^1.6.4"
   }

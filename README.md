@@ -9,7 +9,6 @@
 
 ## TODO
 - [ ] postgresqls
-- [ ] add cache 
 
 __Table of contents__
 - [Installation](#installation)
@@ -77,24 +76,22 @@ config = 'mysql://user:password@host:post/database'
 #### options
 ```js
 options = {
-    dialect         : 'mysql',  // which db? default: "mysql",
-    pool            : true,     // connection pool ? default true
-    promise         : true      // using promise async/await ? default true
-    logging         : false,    // print sql ? default false
-    maxLimit        : -1,       // sql limit, default no limit
+    dialect   : 'mysql',  // which db? default: "mysql",
+    pool      : true,     // connection pool ? default true
+    promise   : true      // using promise async/await ? default true
+    logging   : false,    // print sql ? default false
+    maxLimit  : -1,       // sql limit, default no limit
+    redis     : {
+      config    : undefined,    // can use {host: "", port: "", password: "", db: ""} or "redis://:password@host:port/db",
+      cache     : 'false'       // use cache ? default false
+      ttl       : 60 * 60       // if use cache, how long expire? default 60 * 60,  ttl can set at every query();
+    }
 }
 ```
 ### Conn methods
 #### query
 ```js
 await conn.query(sql)
-
-const result = await conn.query('select * from tb_example')
-// select * from tb_example
-```
-#### execute
-```js
-await conn.execute(sql)
 
 const result = await conn.query('select * from tb_example')
 // select * from tb_example
@@ -187,6 +184,7 @@ findOptions = {
     limit: undefined,   // eg: 1
     offset: undefined,  // eg: 1
     logging: false,     // eg: true
+    ttl: 0,             // eg: if open cache, then this ttl have Higher priority than global ttl;  if set <=0, then not cache this find
 }
 ```
 ### Chain methods
