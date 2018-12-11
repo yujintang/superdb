@@ -311,6 +311,10 @@ const result = await conn
 conn.logging(true) // print superdb sql 
 conn.logging(false) // not print superdb sql
 ```
+#### ttl(params.ttl)
+```js
+conn.ttl(60 * 5)  // redis cache ex = 60 * 5
+```
 
 ### Op
 > Op = conn.op; 用来提供一系列where查询的方法集

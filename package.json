@@ -1,10 +1,10 @@
 {
   "name": "superdb",
-  "version": "1.0.1",
+  "version": "1.0.2",
+  "description": "more db support, redis cache, chain Op, Reject splicing SQL ",
   "main": "index.js",
   "repository": "git@github.com:yujintang/superdb.git",
   "scripts": {
-    "lint": "eslint ./",
     "lint:fix": "eslint --fix ./",
     "test": "mocha"
   },
@@ -21,9 +21,15 @@
     "mysql",
     "postgresql",
     "postgres",
-    "nodejs",
-    "orm"
+    "nodejs"
   ],
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 6.0"
+  },
   "dependencies": {
     "ioredis": "^4.3.0",
     "lodash": "^4.17.11",
