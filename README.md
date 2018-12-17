@@ -134,6 +134,7 @@ await conn.findAndCountAll(tbName, findOptions);
 //  SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
 #### count
+> return [{COUNT: Number},...]
 ```js
 await conn.count(tbName, findOptions);
 
@@ -145,7 +146,19 @@ const result = await conn.count('tb_example', {
   });
 // SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
+#### exists
+> return Boolean
+```js
+await conn.exists(tbName, whereOptions);
+
+const result = await conn.count('tb_example', {
+    id: 333,
+    name: 'superdb',
+  });
+// SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
+```
 #### create
+> return create sum;
 ```js
 await conn.create(tbName, createParams);
 
