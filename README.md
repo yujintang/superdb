@@ -78,7 +78,6 @@ config = 'mysql://user:password@host:post/database'
 options = {
     dialect   : 'mysql',  // which db? default: "mysql",
     pool      : true,     // connection pool ? default true
-    promise   : true      // using promise async/await ? default true
     logging   : false,    // print sql ? default false
     maxLimit  : -1,       // sql limit, default no limit
     redis     : {
