@@ -159,10 +159,18 @@ const result = await conn.count('tb_example', {
 });
 // SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
-#### create
-> return create sum;
+#### createOne
+> createParams must {},
 ```js
-await conn.create(tbName, createParams, options);
+await conn.createOne(tbName, createParams, options);
+
+const result = await conn.create('tb_example', [{ id: 100, name: 'qt' }, { id: 101, name: 'ds' }]);
+// INSERT INTO tb_example (id,name) values (100, 'qt'), (101, 'ds')
+```
+#### bulkCreate
+> createParams must [],
+```js
+await conn.bulkCreate(tbName, createParams, options);
 
 const result = await conn.create('tb_example', [{ id: 100, name: 'qt' }, { id: 101, name: 'ds' }]);
 // INSERT INTO tb_example (id,name) values (100, 'qt'), (101, 'ds')

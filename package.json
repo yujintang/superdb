@@ -1,6 +1,6 @@
 {
   "name": "superdb",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "more db support, redis cache, chain Op, Reject splicing SQL ",
   "main": "index.js",
   "repository": "git@github.com:yujintang/superdb.git",
@@ -25,7 +25,8 @@
   ],
   "files": [
     "lib",
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "engines": {
     "node": ">= 6.0"
