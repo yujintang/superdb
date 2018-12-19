@@ -98,7 +98,7 @@ const result = await conn.query('select * from tb_example')
 ```
 #### find
 ```js
-await conn.find(tbName, findOptions);
+await conn.find(tbName, options);
 
 const result = await conn.find('tb_example', {
     where: {
@@ -110,7 +110,7 @@ const result = await conn.find('tb_example', {
 ```
 #### findOne
 ```js
-await conn.findOne(tbName, findOptions);
+await conn.findOne(tbName, options);
 
 const result = await conn.find('tb_example', {
     where: {
@@ -122,7 +122,7 @@ const result = await conn.find('tb_example', {
 ```
 #### findAndCountAll
 ```js
-await conn.findAndCountAll(tbName, findOptions);
+await conn.findAndCountAll(tbName, options);
 
   const result = await conn.findAndCountAll('tb_example', {
     where: {
@@ -136,7 +136,7 @@ await conn.findAndCountAll(tbName, findOptions);
 #### count
 > return [{COUNT: Number},...]
 ```js
-await conn.count(tbName, findOptions);
+await conn.count(tbName, options);
 
 const result = await conn.count('tb_example', {
     where: {
@@ -149,25 +149,27 @@ const result = await conn.count('tb_example', {
 #### exists
 > return Boolean
 ```js
-await conn.exists(tbName, whereOptions);
+await conn.exists(tbName, options);
 
 const result = await conn.count('tb_example', {
+  where: {
     id: 333,
     name: 'superdb',
-  });
+  }
+});
 // SELECT COUNT(*) AS COUNT FROM tb_example WHERE id = 333 AND name = 'superdb'
 ```
 #### create
 > return create sum;
 ```js
-await conn.create(tbName, createParams);
+await conn.create(tbName, createParams, options);
 
 const result = await conn.create('tb_example', [{ id: 100, name: 'qt' }, { id: 101, name: 'ds' }]);
 // INSERT INTO tb_example (id,name) values (100, 'qt'), (101, 'ds')
 ```
 #### update
 ```js
-await conn.update(tbName, updateOptions, findOptions);
+await conn.update(tbName, updateOptions, options);
 
 const result = await conn.update('tb_example', { name: 'qtds' }, {
     where: { id: 100 },
@@ -176,7 +178,7 @@ const result = await conn.update('tb_example', { name: 'qtds' }, {
 ```
 #### delete
 ```js
-await conn.delete(tbName, deleteOptions)
+await conn.delete(tbName, options)
 
 const result = await conn.delete('tb_example', {
     where: { id: 100 },
@@ -184,9 +186,9 @@ const result = await conn.delete('tb_example', {
   });
 // DELETE FROM tb_example WHERE id = 100 LIMIT 1
 ```
-### findOptions
+### options
 ```js
-findOptions = {
+options = {
     table: undefined,   // eg: ['tb_example']
     select: [],         // eg: ['id', 'name']
     join: [],           // eg: [{table: 'tb_user', on: 'tb_user.id = tb_example.id'}]
