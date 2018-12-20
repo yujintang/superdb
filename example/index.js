@@ -1,12 +1,12 @@
 const Easydb = require('../index');
 
 const db = new Easydb('mysql://root:password@localhost/tb_example', {
+  cache: false,
   logging: true,
-  maxLimit: -1,
-  redis: {
-    config: 'redis://:password@localhost:6379',
-    cache: true,
-    ttl: 60 * 60,
+  redis: 'redis://:password@localhost:6379',
+  beforeHooks: {
+  },
+  afterHooks: {
   },
 });
 

@@ -18,6 +18,7 @@ __Table of contents__
 - [findOptions](#findoptions)
 - [Chain methods](#chain-methods)
 - [Op](#op)
+- [Hooks](#hooks)
 
 ### Installation
 ```shell
@@ -79,12 +80,12 @@ options = {
     dialect   : 'mysql',  // which db? default: "mysql",
     pool      : true,     // connection pool ? default true
     logging   : false,    // print sql ? default false
-    maxLimit  : -1,       // sql limit, default no limit
-    redis     : {
-      config    : undefined,    // can use {host: "", port: "", password: "", db: ""} or "redis://:password@host:port/db",
-      cache     : 'false'       // use cache ? default false
-      ttl       : 60 * 60       // if use cache, how long expire? default 60 * 60,  ttl can set at every query();
-    }
+    redis     : undefined, // can use {host: "", port: "", password: "", db: ""} or "redis://:password@host:port/db",
+    cache     : false      // use cache ? default false
+    beforeHooks: {
+    },
+    afterHooks: {
+    },
 }
 ```
 ### Conn methods
@@ -488,4 +489,45 @@ const result = await conn.find('tb_example', {
     },
   });
 // SELECT * FROM tb_example WHERE name NOT BETWEEN 'c' AND 'f'
+```
+
+### Hooks
+> config beforeHooks and afterHooks
+#### select: (params)=>{return params}
+#### where: (params)=>{return params}
+#### updateBody: (params)=>{return params}
+```js
+afterHooks:{
+  updateBody: (params) => {
+      const result = params.map(v => Object.assign({}, v, {
+        updated: Date.parse(new Date()),
+      }));
+      return result;
+    },
+}
+```
+#### insertBody: (params:Array<Object>)=>{return params}
+```js
+afterHooks:{
+  insertBody: (params) => {
+      const result = params.map(v => Object.assign({}, v, {
+        created: Date.parse(new Date()),
+      }));
+      return result;
+    },
+}
+```
+#### limit: (params)=>{return params}
+> find 不指定limit, 一次最多查询10*1000条数据,内置该hook
+```js
+beforeHooks: {
+    limit: () => 10 * 1000,
+}
+```
+#### ttl: (params)=>{return params}
+> cache ttl = 60 * 60, 内置该hook
+```js
+beforeHooks: {
+    ttl: () => 60 * 60,
+}
 ```
