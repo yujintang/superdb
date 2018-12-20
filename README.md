@@ -184,6 +184,24 @@ const result = await conn.update('tb_example', { name: 'qtds' }, {
   });
 // UPDATE tb_example SET name = 'qtds' WHERE id = 100
 ```
+#### bulkUpdate
+```js
+await conn.bulkUpdate(tbName, updateOptions, options);
+
+const result = await conn.bulkUpdate('tb_example', { name: 'qtds' }, {
+    where: { id: 100 },
+  });
+// UPDATE tb_example SET name = 'qtds' WHERE id = 100
+```
+#### updateOne
+```js
+await conn.updateOne(tbName, updateOptions, options);
+
+const result = await conn.update('tb_example', { name: 'qtds' }, {
+    where: { id: 100 },
+  });
+// UPDATE tb_example SET name = 'qtds' WHERE id = 100 LIMIT 1
+```
 #### delete
 ```js
 await conn.delete(tbName, options)
