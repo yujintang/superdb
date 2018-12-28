@@ -7,7 +7,7 @@ const run = async () => {
     where: {
       name: 'superdb',
     },
-    limit:1,
+    limit: 1,
     logging: true,
   });
   console.log(result);

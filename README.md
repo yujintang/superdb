@@ -509,8 +509,8 @@ const result = await conn.find('tb_example', {
 // SELECT * FROM tb_example WHERE name NOT BETWEEN 'c' AND 'f'
 ```
 
-### Hooks
-> config beforeHooks and afterHooks
+### beforeHooks
+> config beforeHooks
 #### select: (params:String)=>{return params}
 #### where: (params:Object)=>{return params}
 #### updateBody: (params:Object)=>{return params}
@@ -558,4 +558,20 @@ beforeHooks: {
           return ttl;
         },
 }
+```
+### afterHooks
+#### find: (result: Array<object>)=>{return result}
+> 删除find结果中的created 与 updated字段 
+```js
+  afterHooks: {
+    find: (list) => {
+      const result = list.map((v) => {
+        const tempV = v;
+        delete tempV.created;
+        delete tempV.updated;
+        return tempV;
+      });
+      return result;
+    },
+  },
 ```

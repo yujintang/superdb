@@ -7,6 +7,15 @@ const db = new Easydb('mysql://root:password@localhost/tb_example', {
   beforeHooks: {
   },
   afterHooks: {
+    find: (list) => {
+      const result = list.map((v) => {
+        const tempV = v;
+        delete tempV.created;
+        delete tempV.updated;
+        return tempV;
+      });
+      return result;
+    },
   },
 });
 
