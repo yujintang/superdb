@@ -515,7 +515,7 @@ const result = await conn.find('tb_example', {
 #### where: (params:Object)=>{return params}
 #### updateBody: (params:Object)=>{return params}
 ```js
-afterHooks:{
+beforeHooks:{
   updateBody: (params) => {
     const result = Object.assign({}, params, {
       updated: Date.parse(new Date()) / 1000,
@@ -526,7 +526,7 @@ afterHooks:{
 ```
 #### insertBody: (params:Array<Object>)=>{return params}
 ```js
-afterHooks:{
+beforeHooks:{
   insertBody: (params) => {
       const result = params.map(v => Object.assign({}, v, {
         created: Date.parse(new Date()),
@@ -539,13 +539,23 @@ afterHooks:{
 > find 不指定limit, 一次最多查询10*1000条数据,内置该hook
 ```js
 beforeHooks: {
-    limit: () => 10 * 1000,
+    limit: () => (limit) => {
+          if (limit === undefined)) {
+            return 10 * 1000;
+          }
+          return limit;
+        },,
 }
 ```
 #### ttl: (params:Integer)=>{return params}
 > cache ttl = 60 * 60, 内置该hook
 ```js
 beforeHooks: {
-    ttl: () => 60 * 60,
+    ttl: (ttl) => {
+          if (ttl === undefined)) {
+            return 60 * 60;
+          }
+          return ttl;
+        },
 }
 ```
