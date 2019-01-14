@@ -7,9 +7,6 @@
 5. 频繁读数据放入缓存
 6. 性能提升
 
-## TODO
-- [ ] postgresqls
-
 __Table of contents__
 - [Installation](#installation)
 - [QuickStart](#quickStart)
@@ -215,7 +212,7 @@ const result = await conn.delete('tb_example', {
 ### options
 ```js
 options = {
-    table: undefined,   // eg: ['tb_example']
+    table: undefined,   // eg: 'tb_example'
     select: [],         // eg: ['id', 'name']
     join: [],           // eg: [{table: 'tb_user', on: 'tb_user.id = tb_example.id'}]
     where: {},          // eg: {name: 'superdb'}
@@ -232,14 +229,10 @@ options = {
 #### table(params.table)
 ```js
 conn.table('tb_example')
-conn.table(['tb_example'])
-
-conn.table('tb_example as exp')
-conn.table(['tb_example', 'exp'])
 
   const result = await conn
-    .find(['tb_example','exp']);
-//  SELECT * FROM tb_example AS exp
+    .find('tb_example');
+//  SELECT * FROM tb_example
 ```
 #### select(params.select)
 ```js

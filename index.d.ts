@@ -19,7 +19,7 @@ declare namespace superdb {
   }
 
   interface pivotOptions {
-    table?: String | Array<String>,
+    table?: String,
     select?: Array<String>,
     join?: Array<String>,
     where?: Object,
@@ -35,7 +35,7 @@ declare namespace superdb {
   }
 
   interface Chain {
-    table(attr?: String | Array<String>): Chain
+    table(attr?: String ): Chain
     select(attr?: Array<String>): Chain
     join(attr?: Array<String>): Chain
     where(attr?: Object): Chain
