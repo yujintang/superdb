@@ -7,8 +7,8 @@ describe('chain test', () => {
   describe('table', () => {
     it('array params should return true', () => {
       const chain = new Chain();
-      chain.table(['tb_example', 'exp']);
-      assert.equal(chain.body.table, 'tb_example AS exp');
+      chain.table('tb_example');
+      assert.equal(chain.body.table, 'tb_example');
     });
   });
   describe('select', () => {
