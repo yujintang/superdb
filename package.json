@@ -32,6 +32,7 @@
     "node": ">= 6.0"
   },
   "dependencies": {
+    "gbox": "^1.0.1",
     "ioredis": "^4.3.0",
     "lodash": "^4.17.11",
     "mysql2": "^1.6.4"
