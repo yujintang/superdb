@@ -77,6 +77,7 @@ options = {
     dialect   : 'mysql',  // which db? default: "mysql",
     pool      : true,     // connection pool ? default true
     logging   : false,    // print sql ? default false
+    logger    : console,  // log, default console
     redis     : undefined, // can use {host: "", port: "", password: "", db: ""} or "redis://:password@host:port/db",
     cache     : false      // use cache ? default false
     beforeHooks: {

@@ -5,7 +5,7 @@ const run = async () => {
   const result = await conn.findAndCountAll('tb_example', {
     select: ['id', 'name'],
     where: {
-      name: 'superdb',
+      name: 'super1',
     },
     limit: 1,
     logging: true,

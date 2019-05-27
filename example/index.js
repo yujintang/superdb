@@ -1,6 +1,6 @@
 const Easydb = require('../index');
 
-const db = new Easydb('mysql://root:password@localhost/tb_example', {
+const db = new Easydb('mysql://root:password@localhost/superdb', {
   cache: true,
   logging: true,
   redis: 'redis://:password@localhost:6379',

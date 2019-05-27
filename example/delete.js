@@ -5,7 +5,7 @@ const run = async () => {
 
   const result = await conn.delete('tb_example', {
     where: {
-      id: 100,
+      id: 1,
     },
   });
   console.log(result);

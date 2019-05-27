@@ -5,7 +5,7 @@ const run = async () => {
 
   const result = await conn.update('tb_example', { name: 'hello world' }, {
     where: {
-      id: 100,
+      id: 1,
     },
   });
   console.log(result);

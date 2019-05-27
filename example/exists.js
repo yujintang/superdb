@@ -4,9 +4,8 @@ const run = async () => {
   const conn = await db.createConn();
   const result = await conn.exists('tb_example', {
     where: {
-      name: 'superdb1d',
+      name: 'super1',
     },
-    group: ['name desc'],
   });
   console.log(result);
 };
