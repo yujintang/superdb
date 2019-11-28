@@ -191,6 +191,7 @@ const result = await conn.bulkUpdate('tb_example', { name: 'qtds' }, {
   });
 // UPDATE tb_example SET name = 'qtds' WHERE id = 100
 ```
+
 #### updateOne
 ```js
 await conn.updateOne(tbName, updateOptions, options);
@@ -200,13 +201,23 @@ const result = await conn.update('tb_example', { name: 'qtds' }, {
   });
 // UPDATE tb_example SET name = 'qtds' WHERE id = 100 LIMIT 1
 ```
+
 #### delete
 ```js
 await conn.delete(tbName, options)
 
 const result = await conn.delete('tb_example', {
     where: { id: 100 },
-    limit: 1,
+  });
+// DELETE FROM tb_example WHERE id = 100
+```
+
+#### deleteOne
+```js
+await conn.delete(tbName, options)
+
+const result = await conn.delete('tb_example', {
+    where: { id: 100 },
   });
 // DELETE FROM tb_example WHERE id = 100 LIMIT 1
 ```
@@ -286,7 +297,20 @@ const result = await conn
       direction: 'left',
     }])
     .find('tb_example');  
-// SELECT * FROM tb_example left JOIN tb_user as User ON User.id = tb_example.id
+// SELECT * FROM tb_example LEFT JOIN tb_user as User ON User.id = tb_example.id
+
+
+  const result = await conn
+    .join([
+      'LEFT JOIN tb_user as User ON User.id = tb_example.id'
+    ])
+    .find('tb_example');  
+// SELECT * FROM tb_example LEFT JOIN tb_user as User ON User.id = tb_example.id
+
+  const result = await conn
+    .join('LEFT JOIN tb_user as User ON User.id = tb_example.id')
+    .find('tb_example');  
+// SELECT * FROM tb_example LEFT JOIN tb_user as User ON User.id = tb_example.id
 ```
 #### limit(params.limit)
 ```js

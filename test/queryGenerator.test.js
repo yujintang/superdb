@@ -84,10 +84,4 @@ describe('queryGenerator test', () => {
     });
     assert.equal(sql, "WHERE (e = 1 OR f = 4) AND a = 1 AND b = 'q' AND c = 'qwe' AND d BETWEEN 2 AND 100 AND g = 'finished' ");
   });
-  describe('joinSql', () => {
-    it('should return true', () => {
-      const qg = new QG();
-      assert.equal(qg.joinSql([{ table: 'tb_user', on: 'tb_user.id = tb_example.id', direction: 'left' }]), 'left JOIN tb_user ON tb_user.id = tb_example.id ');
-    });
-  });
 });
