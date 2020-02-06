@@ -97,7 +97,7 @@ describe('chain test', () => {
         limit: 10,
         offset: 2,
       });
-      assert.equal(sql, "SELECT id, name FROM tb_example WHERE id = 5 AND name = 'qtds' LIMIT 10 OFFSET 2 ");
+      assert.equal(sql, "SELECT id, name FROM tb_example WHERE `id` = 5 AND `name` = 'qtds' LIMIT 10 OFFSET 2 ");
     });
     it('insert', () => {
       const chain = new Chain();
@@ -105,7 +105,7 @@ describe('chain test', () => {
         table: 'tb_example',
         insertBody: [{ id: 1, name: 'hello' }, { id: 2, name: 'world' }],
       });
-      assert.equal(sql, "INSERT INTO tb_example (id,name) values (1, 'hello'), (2, 'world') ");
+      assert.equal(sql, 'INSERT INTO tb_example (`id`,`name`) values (1, \'hello\'), (2, \'world\') ');
     });
     it('update', () => {
       const chain = new Chain();
@@ -116,7 +116,7 @@ describe('chain test', () => {
         limit: 10,
         offset: 2,
       });
-      assert.equal(sql, "UPDATE tb_example SET name = 'hello world' WHERE id = 5 AND name = 'qtds' LIMIT 10 ");
+      assert.equal(sql, 'UPDATE tb_example SET `name` = \'hello world\' WHERE `id` = 5 AND `name` = \'qtds\' LIMIT 10 ');
     });
     it('delete', () => {
       const chain = new Chain();
@@ -126,7 +126,7 @@ describe('chain test', () => {
         limit: 10,
         offset: 2,
       });
-      assert.equal(sql, "DELETE FROM tb_example WHERE id = 5 AND name = 'qtds' LIMIT 10 ");
+      assert.equal(sql, "DELETE FROM tb_example WHERE `id` = 5 AND `name` = 'qtds' LIMIT 10 ");
     });
   });
 });

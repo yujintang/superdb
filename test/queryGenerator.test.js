@@ -12,13 +12,13 @@ describe('queryGenerator test', () => {
   describe('updateSql', () => {
     it('should return true', () => {
       const qg = new QG();
-      assert.equal(qg.updateSql({ id: 100, name: 'qtds' }), "SET id = 100 , name = 'qtds' ");
+      assert.equal(qg.updateSql({ id: 100, name: 'qtds' }), 'SET `id` = 100 , `name` = \'qtds\' ');
     });
   });
   describe('insertSql', () => {
     it('should return true', () => {
       const qg = new QG();
-      assert.equal(qg.insertSql([{ id: 100, name: 'qtds' }, { id: 101, name: 'superdb' }]), "(id,name) values (100, 'qtds'), (101, 'superdb') ");
+      assert.equal(qg.insertSql([{ id: 100, name: 'qtds' }, { id: 101, name: 'superdb' }]), '(`id`,`name`) values (100, \'qtds\'), (101, \'superdb\') ');
     });
   });
   describe('selectSql', () => {
@@ -82,6 +82,6 @@ describe('queryGenerator test', () => {
       },
       g: 'finished',
     });
-    assert.equal(sql, "WHERE (e = 1 OR f = 4) AND a = 1 AND b = 'q' AND c = 'qwe' AND d BETWEEN 2 AND 100 AND g = 'finished' ");
+    assert.equal(sql, 'WHERE (`e` = 1 OR `f` = 4) AND `a` = 1 AND `b` = \'q\' AND c = \'qwe\' AND d BETWEEN 2 AND 100 AND `g` = \'finished\' ');
   });
 });
