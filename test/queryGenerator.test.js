@@ -82,6 +82,6 @@ describe('queryGenerator test', () => {
       },
       g: 'finished',
     });
-    assert.equal(sql, 'WHERE (`e` = 1 OR `f` = 4) AND `a` = 1 AND `b` = \'q\' AND c = \'qwe\' AND d BETWEEN 2 AND 100 AND `g` = \'finished\' ');
+    assert.equal(sql, 'WHERE (`e` = 1 OR `f` = 4) AND `a` = 1 AND `b` = \'q\' AND c = \'qwe\' AND `d` BETWEEN 2 AND 100 AND `g` = \'finished\' ');
   });
 });
